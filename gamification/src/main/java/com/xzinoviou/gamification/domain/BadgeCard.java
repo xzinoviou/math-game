@@ -24,7 +24,7 @@ public class BadgeCard {
   @Id
   @GeneratedValue
   @Column(name = "BADGE_ID")
-  private final Long id;
+  private final Long badgeId;
 
   private final Long userId;
 
