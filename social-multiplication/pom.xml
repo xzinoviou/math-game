@@ -45,6 +45,7 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- spring amqp -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
