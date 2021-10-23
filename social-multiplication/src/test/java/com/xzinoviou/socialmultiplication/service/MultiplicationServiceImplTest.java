@@ -12,6 +12,8 @@ import static org.mockito.Mockito.when;
 import com.xzinoviou.socialmultiplication.domain.Multiplication;
 import com.xzinoviou.socialmultiplication.domain.MultiplicationResultAttempt;
 import com.xzinoviou.socialmultiplication.domain.User;
+import com.xzinoviou.socialmultiplication.event.EventDispatcher;
+import com.xzinoviou.socialmultiplication.event.MultiplicationSolvedEvent;
 import com.xzinoviou.socialmultiplication.repository.MultiplicationResultAttemptRepository;
 import com.xzinoviou.socialmultiplication.repository.UserRepository;
 import java.util.ArrayList;
@@ -42,6 +44,9 @@ class MultiplicationServiceImplTest {
   @Mock
   private UserRepository userRepository;
 
+  @Mock
+  private EventDispatcher eventDispatcher;
+
   private MultiplicationServiceImpl testClass;
 
   @BeforeEach
@@ -52,7 +57,11 @@ class MultiplicationServiceImplTest {
     MockitoAnnotations.openMocks(this);
 
     testClass =
-        new MultiplicationServiceImpl(randomGeneratorService, attemptRepository, userRepository);
+        new MultiplicationServiceImpl(
+            randomGeneratorService,
+            attemptRepository,
+            userRepository,
+            eventDispatcher);
 
   }
 
@@ -81,6 +90,7 @@ class MultiplicationServiceImplTest {
 
     MultiplicationResultAttempt verifiedAttempt =
         getMultiplicationResultAttempt(multiplication, user, 3000, true);
+    MultiplicationSolvedEvent event = getMultiplicationSolvedEvent(verifiedAttempt);
 
     when(userRepository.findByAlias(USER_ALIAS)).thenReturn(Optional.of(user));
 
@@ -88,6 +98,13 @@ class MultiplicationServiceImplTest {
 
     assertTrue(result);
     verify(attemptRepository, times(1)).save(verifiedAttempt);
+    verify(eventDispatcher, times(1)).send(event);
+  }
+
+  private MultiplicationSolvedEvent getMultiplicationSolvedEvent(
+      MultiplicationResultAttempt attempt) {
+    return new MultiplicationSolvedEvent(attempt.getId(), attempt.getUser().getId(),
+        attempt.isCorrect());
   }
 
   @Test
@@ -97,6 +114,7 @@ class MultiplicationServiceImplTest {
 
     MultiplicationResultAttempt attempt =
         getMultiplicationResultAttempt(multiplication, user, 1000, false);
+    MultiplicationSolvedEvent event = getMultiplicationSolvedEvent(attempt);
 
     when(userRepository.findByAlias(USER_ALIAS)).thenReturn(Optional.empty());
 
@@ -104,6 +122,7 @@ class MultiplicationServiceImplTest {
 
     assertFalse(result);
     verify(attemptRepository, times(1)).save(any(MultiplicationResultAttempt.class));
+    verify(eventDispatcher, times(1)).send(event);
   }
 
   @Test
