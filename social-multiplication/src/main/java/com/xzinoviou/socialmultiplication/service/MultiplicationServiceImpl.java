@@ -3,6 +3,8 @@ package com.xzinoviou.socialmultiplication.service;
 import com.xzinoviou.socialmultiplication.domain.Multiplication;
 import com.xzinoviou.socialmultiplication.domain.MultiplicationResultAttempt;
 import com.xzinoviou.socialmultiplication.domain.User;
+import com.xzinoviou.socialmultiplication.event.EventDispatcher;
+import com.xzinoviou.socialmultiplication.event.MultiplicationSolvedEvent;
 import com.xzinoviou.socialmultiplication.repository.MultiplicationResultAttemptRepository;
 import com.xzinoviou.socialmultiplication.repository.UserRepository;
 import java.util.List;
@@ -22,13 +24,17 @@ public class MultiplicationServiceImpl implements MultiplicationService {
 
   private final UserRepository userRepository;
 
+  private final EventDispatcher eventDispatcher;
+
   public MultiplicationServiceImpl(
       RandomGeneratorService randomGeneratorService,
       MultiplicationResultAttemptRepository attemptRepository,
-      UserRepository userRepository) {
+      UserRepository userRepository,
+      EventDispatcher eventDispatcher) {
     this.randomGeneratorService = randomGeneratorService;
     this.attemptRepository = attemptRepository;
     this.userRepository = userRepository;
+    this.eventDispatcher = eventDispatcher;
   }
 
   @Override
@@ -51,7 +57,14 @@ public class MultiplicationServiceImpl implements MultiplicationService {
 
     MultiplicationResultAttempt checkedAttempt =
         getCheckedResultAttempt(user.orElse(resultAttempt.getUser()), resultAttempt, correct);
+    //persist the attempt
     attemptRepository.save(checkedAttempt);
+
+    //send the event
+    eventDispatcher.send(new MultiplicationSolvedEvent(
+        checkedAttempt.getId(),
+        checkedAttempt.getUser().getId(),
+        checkedAttempt.isCorrect()));
 
     return correct;
   }
