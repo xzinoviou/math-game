@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
+ * Handles operations with BadgeCards.
+ *
  * @author : Xenofon Zinoviou
  */
 public interface BadgeCardRepository extends JpaRepository<BadgeCard, Long> {
