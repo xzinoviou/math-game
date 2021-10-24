@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @author : Xenofon Zinoviou
  */
 @Configuration
-public class RabbitMQConfiguration {
+public class RabbitMQProducerConfiguration {
 
   @Bean
   public TopicExchange multiplicationExchange(
