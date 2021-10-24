@@ -36,7 +36,7 @@ public interface ScoreCardRepository extends JpaRepository<ScoreCard, Long> {
    * Retrieves all score cards for a user by given user id.
    *
    * @param userId the user id .
-   * @return a list with all score cards for given user, sorted by most recent.
+   * @return a list with all scorecards for given user, sorted by most recent.
    */
-  List<ScoreCard> findByUserIdOrderByScoreBadgeTimestampDesc(final Long userId);
+  List<ScoreCard> findByUserIdOrderByScoreTimestampDesc(final Long userId);
 }

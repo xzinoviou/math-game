@@ -37,7 +37,7 @@ public class ScoreCard {
   private final Long attemptId;
 
   @Column(name = "SCORE_TS")
-  private final long badgeTimestamp;
+  private final long scoreTimestamp;
 
   @Column(name = "SCORE")
   private final int score;
