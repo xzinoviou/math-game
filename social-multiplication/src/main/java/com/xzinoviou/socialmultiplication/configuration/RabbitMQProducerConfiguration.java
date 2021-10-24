@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * RabbitMQ Configuration for user of events in the application.
+ * RabbitMQ Producer Configuration.
  *
  * @author : Xenofon Zinoviou
  */
