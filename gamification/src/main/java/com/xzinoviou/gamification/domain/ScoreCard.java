@@ -22,8 +22,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Entity
 public class ScoreCard {
 
-  @Value("${score.card.default.score}")
-  private static int DEFAULT_SCORE;
+  private static final int DEFAULT_SCORE = 10;
 
   @Id
   @GeneratedValue
