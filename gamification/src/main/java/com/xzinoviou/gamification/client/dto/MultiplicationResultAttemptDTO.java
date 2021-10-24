@@ -12,7 +12,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @RequiredArgsConstructor
-public class ClientMultiplicationResultAttempt {
+public class MultiplicationResultAttemptDTO {
 
   private final String userAlias;
   private final int multiplicationFactorA;
@@ -21,7 +21,7 @@ public class ClientMultiplicationResultAttempt {
   private final boolean correct;
 
   //Empty constructor for JSON (de)serialization
-  public ClientMultiplicationResultAttempt() {
+  public MultiplicationResultAttemptDTO() {
     userAlias = null;
     multiplicationFactorA = -1;
     multiplicationFactorB = -1;
