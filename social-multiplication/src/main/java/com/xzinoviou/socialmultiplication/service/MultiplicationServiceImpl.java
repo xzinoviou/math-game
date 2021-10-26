@@ -81,4 +81,11 @@ public class MultiplicationServiceImpl implements MultiplicationService {
         user, resultAttempt.getMultiplication(),
         resultAttempt.getResultAttempt(), correct);
   }
+
+  @Override
+  public MultiplicationResultAttempt getResultById(Long id) {
+    return attemptRepository.findById(id)
+        .orElseThrow(
+            () -> new RuntimeException(String.format("Not found - Attempt with id: %d", id)));
+  }
 }

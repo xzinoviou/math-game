@@ -3,6 +3,7 @@ package com.xzinoviou.socialmultiplication.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -140,6 +141,33 @@ class MultiplicationServiceImplTest {
     List<MultiplicationResultAttempt> results = testClass.getStatsForUser(USER_ALIAS);
 
     assertEquals(2, results.size());
+  }
+
+  @Test
+  void getResultById() {
+    Long attemptId = 10L;
+    User user = getUser();
+    Multiplication multiplication = getMultiplication(50, 60);
+    MultiplicationResultAttempt attempt =
+        getMultiplicationResultAttempt(multiplication, user, 1000, true);
+
+    when(attemptRepository.findById(attemptId)).thenReturn(Optional.ofNullable(attempt));
+
+    MultiplicationResultAttempt result = testClass.getResultById(attemptId);
+
+    assertEquals(multiplication.getFactorA(), result.getMultiplication().getFactorA());
+    assertEquals(multiplication.getFactorB(), result.getMultiplication().getFactorB());
+  }
+
+  @Test
+  void getResultByInvalidId_throwsRuntimeException() {
+    Long userId = 10L;
+    when(attemptRepository.findById(any(Long.class))).thenReturn(Optional.empty());
+
+    RuntimeException exception =
+        assertThrows(RuntimeException.class, () -> testClass.getResultById(userId));
+    assertEquals(String.format("Not found - Attempt with id: %d", userId), exception.getMessage());
+
   }
 
   private Multiplication getMultiplication(int factorA, int factorB) {
