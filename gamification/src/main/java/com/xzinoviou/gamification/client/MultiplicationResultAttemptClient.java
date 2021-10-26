@@ -8,5 +8,5 @@ import com.xzinoviou.gamification.client.dto.MultiplicationResultAttemptDTO;
 public interface MultiplicationResultAttemptClient {
 
   MultiplicationResultAttemptDTO retrieveMultiplicationResultAttemptById(
-      final Long multiplicationId);
+      final Long resultAttemptId);
 }
