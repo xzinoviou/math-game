@@ -1,17 +1,23 @@
 package com.xzinoviou.gamification.client.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.xzinoviou.gamification.client.MultiplicationResultAttemptDeserializer;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
+ * Multiplication attempt DTO , differentiating from
+ * social-multiplication microservice POJO, in a more fat DTO.
+ *
  * @author : Xenofon Zinoviou
  */
 @Getter
 @ToString
 @EqualsAndHashCode
 @RequiredArgsConstructor
+@JsonDeserialize(using = MultiplicationResultAttemptDeserializer.class)
 public class MultiplicationResultAttemptDTO {
 
   private final String userAlias;
@@ -20,7 +26,7 @@ public class MultiplicationResultAttemptDTO {
   private final int resultAttempt;
   private final boolean correct;
 
-  //Empty constructor for JSON (de)serialization
+  //Empty constructor for JSON/JPA (de)serialization
   public MultiplicationResultAttemptDTO() {
     userAlias = null;
     multiplicationFactorA = -1;
