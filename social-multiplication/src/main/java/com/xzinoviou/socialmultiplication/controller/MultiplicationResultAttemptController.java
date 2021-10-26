@@ -5,6 +5,7 @@ import com.xzinoviou.socialmultiplication.service.MultiplicationService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,10 @@ public class MultiplicationResultAttemptController {
     return ResponseEntity.ok(multiplicationService.getStatsForUser(alias));
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<MultiplicationResultAttempt> getResultById(@PathVariable("id") Long id){
+    return ResponseEntity.ok(multiplicationService.getResultById(id));
+  }
 
   //TODO: GET /results?user=[user_alias]
 }

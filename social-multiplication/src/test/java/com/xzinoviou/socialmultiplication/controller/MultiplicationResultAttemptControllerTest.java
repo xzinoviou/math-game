@@ -87,6 +87,26 @@ class MultiplicationResultAttemptControllerTest {
     assertEquals(objectMapper.writeValueAsString(recentAttempts), response.getContentAsString());
   }
 
+  @Test
+  void getResultById() throws Exception {
+    Long attemptId = 10L;
+    User user = getUser();
+    Multiplication multiplication = getMultiplication(50, 60);
+    MultiplicationResultAttempt attempt =
+        getMultiplicationResultAttempt(multiplication, user, 3000, true);
+
+    List<MultiplicationResultAttempt> recentAttempts = Lists.newArrayList(attempt, attempt);
+
+    when(multiplicationService.getResultById(attemptId)).thenReturn(attempt);
+
+    MockHttpServletResponse response = mockMvc.perform(get("/results/" + attemptId)
+        )
+        .andReturn().getResponse();
+
+    assertEquals(HttpStatus.OK.value(), response.getStatus());
+    assertEquals(objectMapper.writeValueAsString(attempt), response.getContentAsString());
+  }
+
   private User getUser() {
     return new User(USER_ALIAS);
   }
