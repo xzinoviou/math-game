@@ -14,7 +14,7 @@ import java.io.IOException;
  *
  * @author : Xenofon Zinoviou
  */
-public class MultiplicationResultAttemptDeserializer
+public class MultiplicationResultAttemptDTODeserializer
     extends JsonDeserializer<MultiplicationResultAttemptDTO> {
 
   @Override

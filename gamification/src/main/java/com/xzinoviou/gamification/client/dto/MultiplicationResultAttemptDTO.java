@@ -1,7 +1,7 @@
 package com.xzinoviou.gamification.client.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.xzinoviou.gamification.client.MultiplicationResultAttemptDeserializer;
+import com.xzinoviou.gamification.client.MultiplicationResultAttemptDTODeserializer;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @RequiredArgsConstructor
-@JsonDeserialize(using = MultiplicationResultAttemptDeserializer.class)
+@JsonDeserialize(using = MultiplicationResultAttemptDTODeserializer.class)
 public class MultiplicationResultAttemptDTO {
 
   private final String userAlias;
