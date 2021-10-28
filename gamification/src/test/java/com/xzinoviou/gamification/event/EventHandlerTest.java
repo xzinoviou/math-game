@@ -3,6 +3,7 @@ package com.xzinoviou.gamification.event;
 import static org.mockito.Mockito.verify;
 
 import com.xzinoviou.gamification.service.GameService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 /**
  * @author : Xenofon Zinoviou
  */
+@Disabled
 @ExtendWith(MockitoExtension.class)
 class EventHandlerTest {
 

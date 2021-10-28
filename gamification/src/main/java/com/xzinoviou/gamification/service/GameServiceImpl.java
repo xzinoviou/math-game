@@ -139,14 +139,18 @@ public class GameServiceImpl implements GameService {
 
   @Override
   public GameStats retrieveStatsForUser(Long userId) {
-    int score = scoreCardRepository.getTotalScoreForUser(userId);
+    try {
+      int score = Optional.of(scoreCardRepository.getTotalScoreForUser(userId)).orElseGet(() -> 0);
 
-    List<BadgeCard> badgeCards =
-        badgeCardRepository.findBadgeCardsByUserIdOrderByBadgeTimestampDesc(userId);
+      List<BadgeCard> badgeCards =
+          badgeCardRepository.findBadgeCardsByUserIdOrderByBadgeTimestampDesc(userId);
 
-    return new GameStats(
-        userId, score,
-        badgeCards.stream().map(BadgeCard::getBadge).collect(Collectors.toList())
-    );
+      return new GameStats(
+          userId, score,
+          badgeCards.stream().map(BadgeCard::getBadge).collect(Collectors.toList())
+      );
+    } catch (RuntimeException e) {
+      return GameStats.emptyStats(userId);
+    }
   }
 }

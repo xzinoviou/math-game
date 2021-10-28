@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  rabbitmq:
+    image: 'rabbitmq:3.8-management-alpine'
+    container_name: rabbitmq
+    ports:
+      # The standard AMQP protocol port
+      - '5672:5672'
+      # HTTP management UI
+      - '15672:15672'
+    environment:
+      AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq/
+    networks:
+      - rabbitmq-net
+
+volumes:
+  rabbitmq-data:
+
+networks:
+  rabbitmq-net:
+    driver: bridge

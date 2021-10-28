@@ -1,8 +1,10 @@
 package com.xzinoviou.gamification.event;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xzinoviou.gamification.service.GameService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,12 +23,24 @@ public class EventHandler {
 
   private final GameService gameService;
 
-  public EventHandler(GameService gameService) {
+  private final ObjectMapper objectMapper;
+
+  public EventHandler(GameService gameService,
+                      ObjectMapper objectMapper) {
     this.gameService = gameService;
+    this.objectMapper = objectMapper;
   }
 
   @RabbitListener(queues = "${multiplication.queue}")
-  void handleMultiplicationSolved(final MultiplicationSolvedEvent event) {
+  void handleMultiplicationSolved(final Object obj) {
+    byte[] serializedBytes = ((Message) obj).getBody();
+    MultiplicationSolvedEvent event = null;
+    try {
+      event = objectMapper.readValue(serializedBytes, MultiplicationSolvedEvent.class);
+    } catch (Exception e) {
+      throw new RuntimeException("Queue consumer failed");
+    }
+
     log.info("MultiplicationSolvedEvent received: {}", event.getMultiplicationResultAttemptId());
 
     try {
