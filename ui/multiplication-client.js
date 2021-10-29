@@ -1,6 +1,8 @@
+let socialMultiplicationPath = "http://localhost:8080";
+
 function updateMultiplication() {
     $.ajax({
-        url: "http://localhost:8080/multiplications/random"
+        url: socialMultiplicationPath + "/multiplications/random"
     }).then(function (data) {
         // Cleans the form
         $("#attempt-form").find("input[name='result-attempt']").val("");
@@ -13,7 +15,7 @@ function updateMultiplication() {
 
 function updateStats(alias) {
     $.ajax({
-        url: "http://localhost:8080/results?alias=" + alias,
+        url: socialMultiplicationPath + "/results?alias=" + alias,
     }).then(function (data) {
         $('#stats-body').empty();
         data.forEach(function (row) {
@@ -49,7 +51,7 @@ $(document).ready(function () {
 
         // Send the data using post
         $.ajax({
-            url: '/results',
+            url: socialMultiplicationPath + '/results',
             type: 'POST',
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",

@@ -17,10 +17,20 @@ services:
       - rabbitmq-data:/var/lib/rabbitmq/
     networks:
       - rabbitmq-net
+  ui:
+    image: math_game_web_server
+    container_name: ui
+    build: ../ui/
+    ports:
+      - '9090:80'
+    networks:
+      - ui-net
 
 volumes:
   rabbitmq-data:
 
 networks:
   rabbitmq-net:
+    driver: bridge
+  ui-net:
     driver: bridge
