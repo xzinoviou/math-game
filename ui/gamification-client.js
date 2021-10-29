@@ -1,6 +1,8 @@
+let gamificationPath = "http://localhost:8081";
+
 function updateLeaderBoard() {
     $.ajax({
-        url: "http://localhost:8081/leaders"
+        url: gamificationPath + "/leaders"
     }).then(function (data) {
         $('#leaderboard-body').empty();
         data.forEach(function (row) {
@@ -13,7 +15,7 @@ function updateLeaderBoard() {
 
 function updateStats(userId) {
     $.ajax({
-        url: "http://localhost:8081/stats?userId=" + userId,
+        url: gamificationPath + "/stats?userId=" + userId,
         success: function (data) {
             $('#stats-div').show();
             $('#stats-user-id').empty().append(userId);
