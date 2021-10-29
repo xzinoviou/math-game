@@ -83,13 +83,13 @@ public class GameServiceImpl implements GameService {
 
 
     //check for badge point categories
-    checkAndGiveBadgeBasedOnScore(userBadgeCards, Badge.BRONZE_MULTIPLICATION, totalScore, 100,
+    checkAndGiveBadgeBasedOnScore(userBadgeCards, Badge.BRONZE_MULTIPLICATION, totalScore, 30,
         userId).ifPresent(userBadgeCards::add);
 
-    checkAndGiveBadgeBasedOnScore(userBadgeCards, Badge.BRONZE_MULTIPLICATION, totalScore, 100,
+    checkAndGiveBadgeBasedOnScore(userBadgeCards, Badge.SILVER_MULTIPLICATION, totalScore, 40,
         userId).ifPresent(userBadgeCards::add);
 
-    checkAndGiveBadgeBasedOnScore(userBadgeCards, Badge.BRONZE_MULTIPLICATION, totalScore, 100,
+    checkAndGiveBadgeBasedOnScore(userBadgeCards, Badge.GOLD_MULTIPLICATION, totalScore, 50,
         userId).ifPresent(userBadgeCards::add);
 
 
