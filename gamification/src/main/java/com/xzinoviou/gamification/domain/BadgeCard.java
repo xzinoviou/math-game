@@ -2,6 +2,8 @@ package com.xzinoviou.gamification.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import lombok.EqualsAndHashCode;
@@ -30,6 +32,7 @@ public class BadgeCard {
 
   private final long badgeTimestamp;
 
+  @Enumerated(value = EnumType.STRING)
   private final Badge badge;
 
   //Empty constructor for JSON / JPA
