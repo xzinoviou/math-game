@@ -11,6 +11,8 @@ function updateLeaderBoard() {
 }
 
 function updateStats(userId) {
+    let badges = '';
+
     $.ajax({
         url: "http://localhost:8081/stats?userId=" + userId,
         success: function(data) {

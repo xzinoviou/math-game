@@ -51,6 +51,8 @@ $("#attempt-form").submit(function( event ) {
     var data = { user: { alias: userAlias}, multiplication: {factorA: a, factorB: b}, resultAttempt: attempt};
 
     // Send the data using post
+    console.log("[--- Result attempt payload ---]")
+    console.log(data);
     $.ajax({
         url: 'http://localhost:8080/results',
         type: 'POST',
