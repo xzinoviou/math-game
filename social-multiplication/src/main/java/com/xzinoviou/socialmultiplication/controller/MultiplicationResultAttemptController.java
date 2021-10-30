@@ -47,9 +47,7 @@ public class MultiplicationResultAttemptController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<MultiplicationResultAttempt> getResultById(@PathVariable("id") Long id){
+  public ResponseEntity<MultiplicationResultAttempt> getResultById(@PathVariable("id") Long id) {
     return ResponseEntity.ok(multiplicationService.getResultById(id));
   }
-
-  //TODO: GET /results?user=[user_alias]
 }
