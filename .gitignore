@@ -32,6 +32,9 @@ build/
 ### VS Code ###
 .vscode/
 
-
-###local dev scripts
-docker/local-dev.yaml
+### dev scripts-properties
+**/dev.yaml
+**/dev.yml
+**/application-dev.properties
+**/application-dev.yaml
+**/application-dev.yml
