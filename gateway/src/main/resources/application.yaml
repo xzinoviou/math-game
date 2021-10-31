@@ -1,1 +1,61 @@
+server:
+  port: 8000
+
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+        cloud:
+          gateway: debug
+    reactor:
+      netty:
+        http:
+          client: debug
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        #multiplication
+        - id: random_multiplication
+          uri: http://localhost:8080
+          predicates:
+            - Path=/multiplications/random
+            - Method=GET
+        - id: send_multiplication_attemt
+          uri: http://localhost:8080
+          predicates:
+            - Path=/results
+            - Method=POST
+        - id: results_by_alias
+          uri: http://localhost:8080
+          predicates:
+            - Path=/results
+            - Query=alias
+            - Method=GET
+        - id: results_by_id
+          uri: http://localhost:8080
+          predicates:
+            - Path=/results/{id}
+            - Method=GET
+        #gamification
+        - id: leaders
+          uri: http://localhost:8081/leaders
+          predicates:
+            - Method=GET
+        - id: stats
+          uri: http://localhost:8081/stats
+          predicates:
+            - Query=userId
+            - Method=GET
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: gateway
 
