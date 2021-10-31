@@ -13,19 +13,19 @@ public class MultiplicationResultAttemptClientImpl implements MultiplicationResu
 
   private final RestTemplate restTemplate;
 
-  private final String multiplicationHost;
+  private final String gatewayHost;
 
   public MultiplicationResultAttemptClientImpl(
       final RestTemplate restTemplate,
-      @Value("${multiplicationHost}") final String multiplicationHost) {
+      @Value("${gatewayHost}") final String gatewayHost) {
     this.restTemplate = restTemplate;
-    this.multiplicationHost = multiplicationHost;
+    this.gatewayHost = gatewayHost;
   }
 
   @Override
   public MultiplicationResultAttemptDTO retrieveMultiplicationResultAttemptById(
       Long resultAttemptId) {
-    return restTemplate.getForObject(multiplicationHost + "/results/" +
+    return restTemplate.getForObject(gatewayHost + "/results/" +
         resultAttemptId, MultiplicationResultAttemptDTO.class);
   }
 }
